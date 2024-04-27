@@ -25,6 +25,9 @@ Sends the previous day's WooCommerce fatal error log to specified email(s) using
 
 == Changelog ==
 
+= 1.2.1 =
+* Removed unnecessary file include
+
 = 1.2 =
 * Settings API: Now uses WordPress Settings API for a cleaner and more secure handling of the settings.
 * Multiple Emails: Improved email handling for multiple recipients with validation.

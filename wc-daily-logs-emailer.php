@@ -148,7 +148,6 @@ register_activation_hook( __FILE__, 'wc_schedule_daily_error_log_email' );
  * @see as_schedule_recurring_action() For scheduling the action.
  */
 function wc_schedule_daily_error_log_email() {
-	include_once ABSPATH . 'wp-admin/includes/plugin.php';
 	if ( ! as_next_scheduled_action( 'wc_daily_error_log_emailer_send_log' ) ) {
 		as_schedule_recurring_action( strtotime( 'tomorrow 5:00 am' ), DAY_IN_SECONDS, 'wc_daily_error_log_emailer_send_log' );
 	}
