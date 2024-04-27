@@ -171,8 +171,12 @@ function wc_daily_error_log_emailer_send_log() {
 	$log_filename = 'fatal-errors-' . $yesterday . '*.log';
 	$log_files    = glob( WC_LOG_DIR . '/' . $log_filename );
 	$options      = get_option( 'wc_log_email_settings' );
-	$emails       = explode( ',', $options['wc_log_email'] ?? get_option( 'admin_email' ) );
-	$site_name    = get_bloginfo( 'name' );
+
+	$recovery_mode_email = defined( 'RECOVERY_MODE_EMAIL' ) ? RECOVERY_MODE_EMAIL : false;
+	$default_email       = $recovery_mode_email ? $recovery_mode_email : get_option( 'admin_email' );
+
+	$emails    = explode( ',', $options['wc_log_email'] ?? $default_email );
+	$site_name = get_bloginfo( 'name' );
 
 	foreach ( $emails as $email ) {
 		$email = trim( $email );
