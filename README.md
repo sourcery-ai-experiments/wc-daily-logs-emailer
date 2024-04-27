@@ -1,10 +1,13 @@
-# Plugin Name: WooCommerce Daily Error Log Emailer with Action Scheduler
-# Description: Sends the previous day's WooCommerce fatal error log to a specified email using Action Scheduler.
+# Plugin Name: WooCommerce Daily Error Log Emailer
 
-1. Change Email Address: Replace 'your-email@example.com' with the email address where you want to receive the logs.
+## Description: Sends the previous day's WooCommerce fatal error log to a specified email using Action Scheduler.
 
-2. Upload and Activate: Upload this file to the wp-content/plugins directory of your WordPress installation. Then, activate the plugin through the WordPress admin panel.
+1. Go to Settings->WooCommerce Daily Logs Emailer
 
-3. Action Scheduler: This script now uses Action Scheduler to schedule a daily task at 5 AM. Ensure that WooCommerce is installed and active, as it includes Action Scheduler.
+2. Update email or leave bland to use default values
+
+3. Action Scheduler: This script now uses Action Scheduler to schedule a daily task at 5 AM.
 
 4. Timezone: Make sure your WordPress installation is set to the correct timezone.
+
+5. Support queries: [https://wp-maintenance.pro/#contact](https://wp-maintenance.pro/#contact)
