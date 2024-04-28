@@ -1,6 +1,6 @@
 <?php
 /**
- * Woo Daily Error Log Emailer
+ * Error Logs Emailer for WooCommerce
  *
  * @package   wc-daily-logs-emailer
  * @link      https://github.com/mslepko/wc-daily-logs-emailer
@@ -8,9 +8,9 @@
  * @copyright Michal Slepko
  * @license   GPL v2 or later
  *
- * Plugin Name: WooCommerce Daily Error Log Emailer
+ * Plugin Name: Error Logs Emailer for WooCommerce
  * Description: Sends the previous day's WooCommerce fatal error log to specified email(s) using Action Scheduler.
- * Version: 1.2.0
+ * Version: 1.2.2
  * Author: WP Maintenance PRO
  * Plugin URI: https://github.com/mslepko/wc-daily-logs-emailer
  * Author URI: https://wp-maintenance.pro
@@ -31,17 +31,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// Required files for WP_Filesystem_Direct.
+require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
+require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+
+// Activation hook.
+register_activation_hook( __FILE__, 'wc_schedule_daily_error_log_email' );
+
+// Deactivation hook.
+register_deactivation_hook( __FILE__, 'wc_daily_error_log_emailer_deactivate_action' );
+
+
 // Register admin menu and settings.
 add_action( 'admin_menu', 'wc_daily_logs_emailer_add_admin_menu' );
 add_action( 'admin_init', 'wc_daily_logs_emailer_settings_init' );
 
 /**
- * Add admin menu for WooCommerce Daily Logs Emailer.
+ * Add admin menu for Error Logs Emailer for WooCommerce.
  */
 function wc_daily_logs_emailer_add_admin_menu() {
 	add_options_page(
-		'WooCommerce Daily Logs Emailer Settings',
-		'WooCommerce Logs Emailer',
+		'Error Logs Emailer for WooCommerce',
+		'Error Logs Emailer',
 		'manage_options',
 		'wc-daily-logs-emailer',
 		'wc_daily_logs_emailer_settings_page'
@@ -49,8 +60,8 @@ function wc_daily_logs_emailer_add_admin_menu() {
 }
 
 /**
- * Initialize the settings for WooCommerce Daily Logs Emailer.
- * */
+ * Initialize the settings for Error Logs Emailer for WooCommerce.
+ */
 function wc_daily_logs_emailer_settings_init() {
 	register_setting( 'wcDailyLogsEmailer', 'wc_log_email_settings' );
 
@@ -90,15 +101,15 @@ function wc_log_email_render() {
 }
 
 /**
- * Callback function for the settings section in WooCommerce Daily Logs Emailer.
+ * Callback function for the settings section in Error Logs Emailer for WooCommerce.
  */
 function wc_daily_logs_emailer_settings_section_callback() {
 	echo '<p>Adjust the settings for how and where you receive WooCommerce error logs.</p>';
 }
 
-	/**
-	 * Displays additional information about the email recipient settings.
-	 */
+/**
+ * Displays additional information about the email recipient settings.
+ */
 function wc_daily_logs_emailer_settings_description() {
 	$admin_email = get_option( 'admin_email' );
 	// Check for RECOVERY_MODE_EMAIL.
@@ -114,14 +125,14 @@ function wc_daily_logs_emailer_settings_description() {
 }
 
 /**
- * Function to display the settings page for WooCommerce Daily Logs Emailer.
+ * Displays the settings page for Error Logs Emailer for WooCommerce.
  *
- * This function displays the settings page for WooCommerce Daily Logs Emailer.
+ * This function displays the settings page for Error Logs Emailer for WooCommerce.
  */
 function wc_daily_logs_emailer_settings_page() {
 	?>
 	<div class="wrap">
-		<h1>WooCommerce Daily Logs Emailer Settings</h1>
+		<h1>Error Logs Emailer for WooCommerce Settings</h1>
 		<form action='options.php' method='post'>
 			<?php
 			settings_fields( 'wcDailyLogsEmailer' );
@@ -133,10 +144,7 @@ function wc_daily_logs_emailer_settings_page() {
 	<?php
 }
 
-// }
 
-// Schedule the action with either Action Scheduler.
-register_activation_hook( __FILE__, 'wc_schedule_daily_error_log_email' );
 
 /**
  * Schedule the daily error log email.
@@ -169,7 +177,7 @@ add_action( 'wc_daily_error_log_emailer_send_log', 'wc_daily_error_log_emailer_s
  * @see wp_mail() For sending the email with the log content.
  */
 function wc_daily_error_log_emailer_send_log() {
-	$yesterday    = date( 'Y-m-d', strtotime( '-1 day' ) );
+	$yesterday    = gmdate( 'Y-m-d', strtotime( '-1 day' ) );
 	$log_filename = 'fatal-errors-' . $yesterday . '*.log';
 	$log_files    = glob( WC_LOG_DIR . '/' . $log_filename );
 	$options      = get_option( 'wc_log_email_settings' );
@@ -185,7 +193,8 @@ function wc_daily_error_log_emailer_send_log() {
 		if ( is_email( $email ) && ! empty( $log_files ) ) {
 			foreach ( $log_files as $log_file ) {
 				if ( file_exists( $log_file ) ) {
-					$log_content = file_get_contents( $log_file );
+					$wp_filesystem = new WP_Filesystem_Direct( null );
+					$log_content   = $wp_filesystem->get_contents( $log_file );
 					wp_mail( $email, "[$site_name] WooCommerce Fatal Errors Log for $yesterday", $log_content );
 				}
 			}
@@ -193,14 +202,7 @@ function wc_daily_error_log_emailer_send_log() {
 	}
 }
 
-/**
- * Deactivation hook to clear the scheduled action.
- *
- * @see as_unschedule_all_actions() For clearing all scheduled actions.
- * @see delete_option() For deleting the 'wc_log_email' option.
- */
 
-register_deactivation_hook( __FILE__, 'wc_daily_error_log_emailer_deactivate_action' );
 
 /**
  * Deactivate the plugin and clear the scheduled action.
