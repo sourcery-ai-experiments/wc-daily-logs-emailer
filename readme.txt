@@ -26,6 +26,7 @@ Sends the previous day's WooCommerce fatal error log to specified email(s) using
 == Changelog ==
 
 = 1.2.1 =
+* Making sure to register the action with Action Scheduler.
 * Removed unnecessary file include
 
 = 1.2 =

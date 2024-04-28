@@ -153,6 +153,9 @@ function wc_schedule_daily_error_log_email() {
 	}
 }
 
+// Make sure to register the action with Action Scheduler.
+add_action( 'wc_daily_error_log_emailer_send_log', 'wc_daily_error_log_emailer_send_log' );
+
 /**
  * Sends the WooCommerce fatal error log of the previous day to a specified email.
  *
