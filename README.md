@@ -4,7 +4,7 @@
 
 1. Go to Settings->WooCommerce Daily Logs Emailer
 
-2. Update email or leave bland to use default values
+2. Update email or leave blank to use default values
 
 3. Action Scheduler: This script now uses Action Scheduler to schedule a daily task at 5 AM.
 
