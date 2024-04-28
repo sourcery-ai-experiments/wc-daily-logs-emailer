@@ -31,10 +31,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-// Required files for WP_Filesystem_Direct.
-require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
-require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
-
 // Activation hook.
 register_activation_hook( __FILE__, 'wc_schedule_daily_error_log_email' );
 
@@ -177,6 +173,10 @@ add_action( 'wc_daily_error_log_emailer_send_log', 'wc_daily_error_log_emailer_s
  * @see wp_mail() For sending the email with the log content.
  */
 function wc_daily_error_log_emailer_send_log() {
+	// Required files for WP_Filesystem_Direct.
+	require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
+	require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+
 	$yesterday    = gmdate( 'Y-m-d', strtotime( '-1 day' ) );
 	$log_filename = 'fatal-errors-' . $yesterday . '*.log';
 	$log_files    = glob( WC_LOG_DIR . '/' . $log_filename );
