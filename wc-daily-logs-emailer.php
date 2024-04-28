@@ -3,7 +3,7 @@
  * Error Logs Emailer for WooCommerce
  *
  * @package   wc-daily-logs-emailer
- * @link      https://github.com/mslepko/wc-daily-logs-emailer
+ * @link      https://github.com/rootscopeltd/wc-error-logs-emailer
  * @author    WP Maintenance PRO <support@wp-maintenance.pro>
  * @copyright Michal Slepko
  * @license   GPL v2 or later
@@ -12,7 +12,7 @@
  * Description: Sends the previous day's WooCommerce fatal error log to specified email(s) using Action Scheduler.
  * Version: 1.2.2
  * Author: WP Maintenance PRO
- * Plugin URI: https://github.com/mslepko/wc-daily-logs-emailer
+ * Plugin URI: https://github.com/rootscopeltd/wc-error-logs-emailer
  * Author URI: https://wp-maintenance.pro
  * Requires Plugins: woocommerce
  *

@@ -12,10 +12,12 @@ Sends the previous day's WooCommerce fatal error log to specified email(s) using
 
 == Description ==
 
-[Error Logs Emailer for WooCommerce](https://github.com/mslepko/wc-daily-logs-emailer) is a free plugin to send fatal error logged by WooCommerce
+[Error Logs Emailer for WooCommerce](https://github.com/rootscopeltd/wc-error-logs-emailer) is a free plugin to send fatal error logged by WooCommerce
 
 - Know what errors are happening on your site without constantly checking the logs
-- Set the email where error logs should be sent
+- Set the email where error logs should be sent if it's not a site admin
+- Add multiple email addresses
+- Emails are sent at 5AM 
 
 == Installation ==
 
