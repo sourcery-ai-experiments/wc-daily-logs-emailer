@@ -1,10 +1,10 @@
-=== WooCommerce Daily Error Log Emailer ===
+=== Error Logs Emailer for WooCommerce ===
 Contributors: mslepko
-Tags: woocommerce, errors, error log, mailer
+Tags: woocommerce, errors, error log, developers, debug
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.2
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Sends the previous day's WooCommerce fatal error log to specified email(s) using
 
 == Description ==
 
-[WooCommerce Daily Error Log Emailer](https://github.com/mslepko/wc-daily-logs-emailer) is a free plugin to send fatal error logged by WooCommerce
+[Error Logs Emailer for WooCommerce](https://github.com/mslepko/wc-daily-logs-emailer) is a free plugin to send fatal error logged by WooCommerce
 
 - Know what errors are happening on your site without constantly checking the logs
 - Set the email where error logs should be sent
@@ -24,6 +24,11 @@ Sends the previous day's WooCommerce fatal error log to specified email(s) using
 3. Go to Settings page to change it.
 
 == Changelog ==
+
+= 1.2.2 =
+* Plugin Check fixes
+* Updated date() to gmdate() to prevent runtime timezone changes
+* Plugin name change to Error Logs Emailer for WooCommerce
 
 = 1.2.1 =
 * Making sure to register the action with Action Scheduler.
